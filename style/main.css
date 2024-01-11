@@ -152,7 +152,7 @@ main .grid-energy {
 }
 main .grid-energy img {
     height: auto !important;
-    width: 22em;
+    width: 20em;
     margin-bottom: 1.75em;
     z-index: 1;
     filter: hue-rotate(0deg) !important;
@@ -184,8 +184,6 @@ main .grid-line {
     display: block;
     position: absolute;
     bottom: -25%;
-
-    /* height: 0.15rem; */
     height: 3px;
     width: 100%;
     background-image: linear-gradient(90deg, rgba(170, 170, 170, 1) 0%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 100%);
@@ -202,11 +200,18 @@ main > div.active .grid-line {
 main .grid-line-vertical {
     transform: rotate(90deg) translateX(-100%);
     transform-origin: 0;
-    /* height: 0.175rem; */
     height: 3px;
 }
 main .grid-line-flipped {
     animation: grid-line-active-backwards 5s linear infinite;
+}
+main > div.active .grid-line.no-line {
+    background-image: linear-gradient(90deg, rgba(170, 170, 170, 1) 0%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 100%);
+    animation-play-state: paused;
+}
+main .grid-line.guide-line-active {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    animation-play-state: running;
 }
 @keyframes grid-line-active-forward {
     to {
@@ -218,6 +223,8 @@ main .grid-line-flipped {
       background-position: -15rem;
     }
 }
+
+
 main .grid-stedin .grid-line {
     left: 50%;
     width: 25%;
@@ -238,10 +245,11 @@ main .grid-schouten .grid-line-vertical {
     left: 50%;
     width: 6.5dvh;
 }
-main > .grid-schouten.guide-line-active .grid-line:first-of-type {
+/* main > .grid-schouten .guide-line-active .grid-line:first-of-type {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     animation-play-state: running;
-}
+} */
+
 /* main .grid-charger .grid-line {
     left: 33%;
     width: 17.5%;
@@ -271,10 +279,10 @@ main .grid-energy .grid-line-vertical {
     left: 50%;
     width: 6.5dvh;
 }
-main > .grid-energy.guide-line-active .grid-line:first-of-type {
+/* main > .grid-energy.guide-line-active .grid-line:first-of-type {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     animation-play-state: running;
-}
+} */
 
 
 

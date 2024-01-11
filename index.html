@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
     <meta charset="utf-8">
@@ -11,116 +11,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
-<body class="loading">
+<body>
     <main>
         <div class="grid-stedin grid-icon">
             <img src="images/powerplant.png" alt="Stedin centrale">
             <!-- Stedin -->
-            <span class="grid-line"> <!-- GRID LINE --> </span>
-            <span class="grid-line grid-line-vertical"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1 grid-line-vertical"> <!-- GRID LINE --> </span>
         </div>
         <div class="grid-schouten grid-icon">
             <img src="images/schouten.png" alt="Schouten kantoor">
             <!-- Schouten -->
-            <span class="grid-line"> <!-- GRID LINE --> </span>
-            <span class="grid-line grid-line-vertical grid-line-flipped"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1 grid-line-vertical"> <!-- GRID LINE --> </span>
         </div>
         <div class="grid-charger grid-icon">
             <img src="images/laadpalen.png" alt="Laadpalen">
             <!-- Laadpalen -->
-            <!-- <span class="grid-line"> GRID LINE </span> -->
-            <span class="grid-line grid-line-vertical grid-line-flipped"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1 grid-line-vertical"> <!-- GRID LINE --> </span>
         </div>
         <div class="grid-energy grid-icon">
-            <!-- <img src="images/windturbine.png" alt="Windturbine"> -->
             <img src="images/container.png" alt="Accu container">
-            <!-- Wind -->
-            <span class="grid-line"> <!-- GRID LINE --> </span>
-            <span class="grid-line grid-line-vertical"> <!-- GRID LINE --> </span>
+            <!-- Container -->
+            <span class="grid-line grid-line-1"> <!-- GRID LINE --> </span>
+            <span class="grid-line grid-line-1 grid-line-vertical"> <!-- GRID LINE --> </span>
         </div>
 
         <div class="grid-transformer">
             <span>Transformator</span>
-            <!-- <img src="images/transformator.png" alt="Transformator"> -->
-            <!-- Transformator -->
         </div>
-        <!-- <div class="grid-battery">
-            <img src="images/container.png" alt="Accu container">
-            <ul>
-                <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-battery-charging"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"></path><line x1="23" y1="13" x2="23" y2="11"></line><polyline points="11 6 7 12 13 12 9 18"></polyline></svg>
-                </li>
-                <li>
-                    <span>
-                        <span>
-                            LAADNIVEAU INDICATIE
-                        </span>
-                    </span>
-                </li>
-                <li>
-                    <strong>0%</strong>
-                </li>
-            </ul>
-            <span class="grid-line grid-line-vertical"> GRID LINE </span>
-        </div> -->
     </main>
 
     <aside>
         <ul>
-            <!-- <li>
-                <label for="time">Tijd</label>
-                <select name="time" id="time">
-                    <option value="02:00">02:00 uur</option>
-                    <option value="14:00">14:00 uur</option>
-                    <option value="16:00">16:00 uur</option>
-                    <option value="17:00">17:00 uur</option>
-                </select>
-            </li> -->
-            <!-- <li>
-                <label>Energieprijs</label>
-                <ul>
-                    <li>
-                        <input type="text" name="energy-price-low" placeholder="Laag" id="energy-price-low">
-                    </li>
-                    <li>
-                        <input type="text" name="energy-price-mid" placeholder="Midden" id="energy-price-mid">
-                    </li>
-                    <li>
-                        <input type="text" name="energy-price-high" placeholder="Hoog" id="energy-price-high">
-                    </li>
-                </ul>
-            </li> -->
-            <!-- <li>
-                <label for="charger">Laadpalen</label>
-                <input type="number" name="charger" value="1" min="0" max="5" id="charger">
-            </li> -->
-            <!-- <li>
-                <label for="wind">Windmolen?</label>
-                <label class="toggle-slider">
-                    <input type="checkbox" name="wind" id="wind">
-                    <span class="toggle-slider-in"></span>
-                </label>
-            </li> -->
-            <!-- <li>
-                <label for="solar">Zonnepanelen?</label>
-                <label class="toggle-slider">
-                    <input type="checkbox" name="solar" checked="true" id="solar">
-                    <span class="toggle-slider-in"></span>
-                </label>
-            </li> -->
             <li>
                 <button id="first-line-button" class="inactive">
                     <span></span>
                     <strong>Lijn verwijderen</strong>
                 </button>
-                <!-- <button>Startpunt toevoegen</button> -->
             </li>
             <li>
                 <button id="second-line-button" class="inactive">
                     <span></span>
                     <strong>Lijn verwijderen</strong>
                 </button>
-                <!-- <button>Eindpunt toevoegen</button> -->
             </li>
             <li>
                 <button>Reset</button>
