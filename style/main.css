@@ -98,10 +98,15 @@ main > div::after {
     height: 0.25em;
     width: 3em;
     transform: translateX(-50%);
-    background-color: var(--color-white);
-    box-shadow: 0 0.15em 1.25em rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(0.5em);
+    -webkit-backdrop-filter: blur(0.5em);
     border-radius: 1em;
     transition: 450ms;
+}
+main > div.active::after {
+    background-color: var(--color-white);
+    box-shadow: 0 0.15em 1.25em rgba(255, 255, 255, 0.25);
 }
 main > div.active-start::after {
     background-color: var(--color-green);
@@ -119,10 +124,16 @@ main > div.grid-icon img {
     cursor: pointer;
     /* mix-blend-mode: plus-lighter; */
 }
-main > div.grid-icon.active-start img,
-main > div.grid-icon.active-end img  {
-    opacity: 1;
+main > div.grid-icon img:hover {
+    transform: scale(1.025);
 }
+/* main > div.grid-icon.active-start img,
+main > div.grid-icon.active-end img {
+    opacity: 1;
+} */
+
+
+/* GRID ITEMS BOVENAAN */
 main .grid-stedin {
     grid-column: 1 / 4;
     grid-row: 1 / 3;
@@ -146,74 +157,12 @@ main .grid-energy img {
     z-index: 1;
     filter: hue-rotate(0deg) !important;
 }
-/* main .grid-solar {
-    grid-column: 11 / 13;
-    grid-row: 1 / 3;
-} */
 main .grid-transformer {
     grid-column: 3 / 5;
     grid-row: 3 / 4;
 }
-/* main .grid-battery {
-    grid-column: 4 / 10;
-    grid-row: 4 / 6;
-    font-size: 0.9em;
-} */
-main .grid-battery::after, 
 main .grid-transformer::after {
     display: none;
-}
-main .grid-battery {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-main .grid-battery ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25em;
-}
-main .grid-battery ul li > svg polyline {
-    transition: 350ms ease-in-out;
-}
-main .grid-battery.active ul li > svg polyline {
-    color: var(--color-green);
-}
-main .grid-battery ul li > span {
-    display: block;
-    position: relative;
-    height: 0.2em;
-    width: 15em;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 1em;
-}
-main .grid-battery ul li > span > span {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0%;
-    height: 100%;
-    background-color: var(--color-green);
-    box-shadow: 0 0.15em 1.25em rgba(165, 240, 17, 0.75);
-    border-radius: 1em;
-    transition: 500ms ease-in-out width;
-}
-main .grid-battery ul li > strong {
-    font-weight: 400;
-    color: rgba(255,255,255,0.65);
-    transition: 350ms ease-in-out;
-}
-main .grid-battery.active ul li > strong {
-    color: rgba(255,255,255,1);
-}
-main .grid-battery img {
-    height: auto;
-    width: 22em;
-    margin-bottom: 1.75em;
-    z-index: 1;
 }
 .grid-transformer span {
     padding: 0.5em 1em;
@@ -326,29 +275,7 @@ main > .grid-energy.guide-line-active .grid-line:first-of-type {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     animation-play-state: running;
 }
-main .grid-solar .grid-line:first-of-type {
-    left: 50%;
-    width: 100%;
-    transform: translateX(-100%);
-}
-main .grid-solar .grid-line-vertical {
-    left: 50%;
-    width: 6.5dvh;
-}
 
-main .grid-battery .grid-line.grid-line-vertical {
-    bottom: 0;
-    left: 50%;
-    /* width: calc((((100dvh - 10em) / 5) - 5px) * 2.5);
-    transform: rotate(90deg) translateX(calc(-100% - 4px)); */
-    /* width: calc((((100dvh - 10em) / 5) - 5px) * 2);
-    transform: rotate(90deg) translateX(calc(-125% - 4px)) translateY(1px); */
-    width: calc((((100dvh - 10em) / 5) - 5px) * 1);
-    transform: rotate(90deg) translateX(calc(-250% - 4px)) translateY(1px);
-}
-main .grid-battery.grid-line-flipped .grid-line {
-    animation: grid-line-active-backwards 5s linear infinite;
-}
 
 
 
@@ -363,7 +290,7 @@ aside {
     bottom: 1.5em;
     transform: translateX(-50%) translateY(0%);
     transition: 450ms ease;
-    animation: menu-animation 1s ease;
+    animation: menu-animation 1.25s ease;
 }
 /* aside:hover {
     transform: translateX(-50%) translateY(0%);
@@ -391,8 +318,8 @@ aside::after {
     z-index: -2;
 }
 @keyframes menu-animation {
-    0%, 15% {
-        transform: translateX(-50%) translateY(125%);
+    0%, 25% {
+        transform: translateX(-50%) translateY(150%);
     }
     /* 65% {
         transform: translateX(-50%) translateY(45%);
@@ -406,22 +333,13 @@ aside ul {
     display: flex;
     align-items: flex-end;
 }
-aside > ul {
-    /* gap: 1em; */
-}
 aside > ul > li {
     display: flex;
     flex-direction: column;
 }
 
 
-aside label {
-    opacity: 0.65;
-    font-size: 0.95em;
-    font-weight: 500;
-    margin-bottom: 0.5em;
-}
-aside input, aside select, aside button {
+aside button {
     appearance: none;
     outline: none;
     border: none;
@@ -432,14 +350,6 @@ aside input, aside select, aside button {
     border-radius: 0.35em;
     background-color: rgba(115, 37, 111, 0.125);
     color: var(--color-white);
-}
-aside select {
-    cursor: pointer;
-    width: 8.5em;
-    background-image: url('/images/chevron-down.svg');
-    background-position: 90% 50%;
-    background-size: 1.25em;
-    background-repeat: no-repeat;
 }
 aside button {
     display: flex;

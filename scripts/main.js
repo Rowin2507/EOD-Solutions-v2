@@ -159,11 +159,13 @@ function checkLineStatus() {
             endItem.classList.remove('active-end');
 
             firstLineButton.classList.add('line-active');
+
+            // TIJDELIJK
+            startItem.classList.add('active');
+            endItem.classList.add('active');
         }, delay);
         
-        // TIJDELIJK
-        startItem.classList.add('active');
-        endItem.classList.add('active');
+        
 
 
 
