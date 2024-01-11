@@ -33,7 +33,7 @@ var batteryPercentage;
 
 
 
-// STARTPUNT knop verwijderen en vervangen door knop die lijn 1/2 verwijderd
+
 
 
 

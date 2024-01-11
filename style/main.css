@@ -49,7 +49,7 @@ body::before{
     
     /* transform: translateY(-75%); */
     z-index: -1;
-    animation: main-animation 2.5s ease;
+    animation: main-animation 1.5s ease;
 }
 @keyframes gradient-animation {
     0% {
@@ -74,10 +74,10 @@ main {
     max-width: 2000px;
     color: rgba(255,255,255,0.65);
     opacity: 1;
-    animation: main-animation 1.5s ease;
+    animation: main-animation 2.5s ease;
 }
 @keyframes main-animation {
-    0%, 35% {
+    0%, 50% {
         opacity: 0;
     }
     100% {
@@ -113,9 +113,10 @@ main > div.active-end::after {
 }
 main > div.grid-icon img {
     height: 14.5em;
-    opacity: 0.45;
+    /* opacity: 0.45; */
     transition: 450ms;
     filter: hue-rotate(205deg);
+    cursor: pointer;
     /* mix-blend-mode: plus-lighter; */
 }
 main > div.grid-icon.active-start img,
@@ -216,7 +217,7 @@ main .grid-battery img {
 }
 .grid-transformer span {
     padding: 0.5em 1em;
-    border: 3px solid rgba(62,43,66,1);
+    border: 3px solid rgba(170, 170, 170, 1);
     background-color: inherit;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -453,18 +454,18 @@ aside button {
     font-weight: 500;
     transition: 450ms;
 }
-aside > ul > li:last-of-type button {
+aside > ul > li:nth-of-type(3) button {
     margin-right: 0;
 }
 aside button:hover {
     color: rgba(255, 255, 255, 1);
     background-color: rgba(255, 255, 255, 0.15);
 }
-aside li:last-of-type button {
+aside li:nth-of-type(3) button {
     background-color: var(--color-white);
     color: var(--color-primary);
 }
-aside li:last-of-type button:hover {
+aside li:nth-of-type(3) button:hover {
     background-color: rgba(255, 255, 255, 0.75);
     color: var(--color-black);
 }
@@ -478,13 +479,19 @@ aside button span {
     background-color: var(--color-white);
     border-radius: 1em;
 }
-
-
-
-
 aside button.inactive {
     display: none;
 }
 aside button.inactive.line-active {
     display: flex;
+}
+aside div {
+    display: grid;
+    place-items: center flex-start;
+    gap: 0.25em;
+    padding-left: 1em;
+    padding-right: 0.15em;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
 }
