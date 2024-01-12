@@ -20,6 +20,10 @@ var secondLineButton = document.querySelector('aside #second-line-button');
 var resetButton = document.querySelector('aside li:nth-of-type(3) button');
 resetButton.addEventListener("click", resetScenario);
 
+var helpTextTop = document.querySelector('aside div > span:first-of-type');
+var helpTextBottom = document.querySelector('aside div > span:last-of-type');
+
+
 
 
 // DEFINIËRING VAN VARIABELEN ----------------------------------------------------------------------------------------
@@ -62,6 +66,40 @@ document.querySelectorAll('main .grid-icon').forEach(function(el) {
                 if (element.classList.contains(className)) {
                     lines = 2;
 
+                    // CHECK OF ER NOG GEEN LIJN (TWEEDE) ACTIEF IS
+                    function checkIfFirstLineAlreadyExists(selector, className) {
+                        var elements = document.querySelectorAll(selector);
+                        
+                        elements.forEach(function(element) {
+                            // CHECK OF DE CLASS BESTAAT
+                            if (element.classList.contains(className)) {
+                                lines = 3;
+
+                                // CHECK OF ER NOG GEEN LIJN (TWEEDE) ACTIEF IS
+                                function checkIfFirstLineAlreadyExists(selector, className) {
+                                    var elements = document.querySelectorAll(selector);
+                                    
+                                    elements.forEach(function(element) {
+                                        // CHECK OF DE CLASS BESTAAT
+                                        if (element.classList.contains(className)) {
+                                            // GEEF EEN CLASS DAT HET MAXIMUM AANTAL IS BEREIKT > POINTER EVENTS NONE
+                                            for (var i = 0; i < elements.length; i++) {
+                                                elements[i].classList.add('max-lines');
+                                            }
+
+                                            // TOON ANDERE HULPTEKST, WAAR DIT WORDT AANGEKAART
+                                            helpTextTop.textContent = 'Maximum aantal lijnen bereikt';
+                                            helpTextBottom.textContent = 'Reset om opnieuw te beginnen';
+                                            
+                                        }
+                                    });
+                                }
+                                checkIfFirstLineAlreadyExists('.grid-icon', 'start-line-3');
+
+                            }
+                        });
+                    }
+                    checkIfFirstLineAlreadyExists('.grid-icon', 'start-line-2');
 
                 }
             });
@@ -155,7 +193,7 @@ function checkLineStatus() {
             startItem.classList.remove('active-start');
             endItem.classList.remove('active-end');
 
-            firstLineButton.classList.add('line-active');
+            // firstLineButton.classList.add('line-active'); // TIJDELIJK WEG (LATER WEL TOEVOEGEN)
 
             // TIJDELIJK
             startItem.classList.add('active-line-' + lines);
@@ -334,6 +372,86 @@ function LineDirection() {
         
     }
 
+
+
+    // RESET LINE 3 CLASSES ------------------------------
+    document.querySelector('.grid-stedin .grid-line-3.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-3.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-charger .grid-line-3.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-energy .grid-line-3.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.remove('no-line');
+    document.querySelector('.grid-stedin .grid-line-3:nth-of-type(5)').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-stedin .grid-line-3.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.remove('guide-line-active');
+    document.querySelector('.grid-energy .grid-line-3:nth-of-type(5)').classList.remove('grid-line-flipped');
+
+    // ALS ELEMENT EEN STARTLIJN HEEFT
+    if (gridStedin.classList.contains('start-line-3')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridSchouten.classList.contains('end-line-3')) {
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('no-line');
+            document.querySelector('.grid-schouten .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        } else {
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('guide-line-active');
+            }, delay);
+        }
+        if (gridCharger.classList.contains('end-line-3')) {
+            document.querySelector('.grid-charger .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-3')) {
+            document.querySelector('.grid-energy .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridSchouten.classList.contains('start-line-3')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-3')) {
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('no-line');
+            document.querySelector('.grid-stedin .grid-line-3').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridCharger.classList.contains('end-line-3')) {
+            document.querySelector('.grid-charger .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-3')) {
+            document.querySelector('.grid-energy .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridCharger.classList.contains('start-line-3')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-3')) {
+            document.querySelector('.grid-stedin .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('guide-line-active');
+            }, delay);
+        } else if (gridSchouten.classList.contains('end-line-3')) {
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-3')) {
+            document.querySelector('.grid-energy .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridBattery.classList.contains('start-line-3')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-3')) {
+            document.querySelector('.grid-stedin .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('guide-line-active');
+            }, delay);
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+        } else if (gridSchouten.classList.contains('end-line-3')) {
+            document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+        } else if (gridCharger.classList.contains('end-line-3')) {
+            document.querySelector('.grid-charger .grid-line-3.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-3:nth-of-type(5)').classList.add('grid-line-flipped');
+        }
+        
+    }
+
     
 
 
@@ -384,20 +502,35 @@ function resetScenario() {
 
         currentEl.classList.remove('active-line-1');
         currentEl.classList.remove('active-line-2');
+        currentEl.classList.remove('active-line-3');
         currentEl.classList.remove('active');
 
         currentEl.classList.remove('start-line-1');
         currentEl.classList.remove('end-line-1');
         currentEl.classList.remove('start-line-2');
         currentEl.classList.remove('end-line-2');
+        currentEl.classList.remove('start-line-3');
+        currentEl.classList.remove('end-line-3');
 
         document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('guide-line-active');
         document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('no-line');
         document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('guide-line-active');
         document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('no-line');
+        document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.remove('guide-line-active');
+        document.querySelector('.grid-schouten .grid-line-3:nth-of-type(5)').classList.remove('no-line');
 
         firstLineButton.classList.remove('line-active');
         secondLineButton.classList.remove('line-active');
+
+        // RESET ALLE CLASSES, OM ELEMENTEN WEER KLIKBAAR TE MAKEN
+        var elements = document.querySelectorAll('.grid-icon');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.remove('max-lines');
+        }
+
+        // RESET HULPTEKST
+        helpTextTop.textContent = 'Klik voor een startpunt';
+        helpTextBottom.textContent = 'Shift-klik voor een eindpunt';
     });    
 }
 
