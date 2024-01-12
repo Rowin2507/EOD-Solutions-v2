@@ -29,20 +29,20 @@ resetButton.addEventListener("click", resetScenario);
 // var charger;
 // var batteryPercentage;
 
-var shift = false;
-var lines = 0;
+var shift = false; // STANDAARD FALSE
+var lines = 1; // BEGINNEN BIJ LIJN 1
 
 
 document.addEventListener('keydown', function(event) {
     if (event.shiftKey) {
         shift = true;
-        console.log('Shift: ' + shift);
+        // console.log('Shift: ' + shift);
     }
 });
 document.addEventListener('keyup', function(event) {
     if (!event.shiftKey) {
         shift = false;
-        console.log('Shift: ' + shift);
+        // console.log('Shift: ' + shift);
     }
 });
 
@@ -52,7 +52,24 @@ document.addEventListener('keyup', function(event) {
 document.querySelectorAll('main .grid-icon').forEach(function(el) {
     // GEEF ELK ITEM EEN KLIK ELEMENT
     el.addEventListener('click', function() {
-        
+
+        // CHECK OF ER NOG GEEN LIJN (EERSTE) ACTIEF IS
+        function checkIfFirstLineAlreadyExists(selector, className) {
+            var elements = document.querySelectorAll(selector);
+            
+            elements.forEach(function(element) {
+                // CHECK OF DE CLASS BESTAAT
+                if (element.classList.contains(className)) {
+                    lines = 2;
+
+
+                }
+            });
+        }
+        checkIfFirstLineAlreadyExists('.grid-icon', 'start-line-1');
+
+
+        // CHECK SHIFT STATUS
         if (shift == false) {
             // ALS SHIFT NIET IS INGEDRUKT ---------------
             // VERWIJDER ALLE BESTAANDE ACTIEVE CLASSES VAN HET ELMEMENT EN VERWIJDER DE EIND CLASS (INDIEN NODIG)
@@ -91,7 +108,7 @@ document.querySelectorAll('main .grid-icon').forEach(function(el) {
                     startLineActive = true;
                 } 
 
-                console.log('Startlijn: ' + startLineActive);
+                // console.log('Startlijn: ' + startLineActive);
             });
         }
         checkIfstartLineContainActive('.grid-icon', 'active-start');
@@ -125,7 +142,7 @@ function checkLineStatus() {
     // CHECK OF ER TWEE CLASSES ZIJN TOEGEVOEGD > MAAK DE EERSTE LIJN AAN
     if ((startLineActive == true) && (endLineActive == true)) {
 
-        lines = 1;
+        // lines = 1;
         console.log('Lijnen: ' + lines);
 
         var startItem = document.querySelector('.active-start');
@@ -141,40 +158,38 @@ function checkLineStatus() {
             firstLineButton.classList.add('line-active');
 
             // TIJDELIJK
+            startItem.classList.add('active-line-' + lines);
+            endItem.classList.add('active-line-' + lines);
             startItem.classList.add('active');
             endItem.classList.add('active');
         }, delay);
+
+        console.log('Lijnen: ' + lines);
+
+        
         
 
         // console.log(startLineActive);
-    } else {
-        console.log('Geen lijn');
-
-        lines = 0;
-        // startItem.classList.remove('start-line-1');
-        // endItem.classList.remove('end-line-1');
-    }
+    } 
 }
 
 
 // FUNCTIES OM TE ACHTERHALEN OF ELEMENT EEN STARTLIJN BEVAT ---------------
 function LineDirection() {
-    // RESET CLASSES
+    // RESET LINE 1 CLASSES ------------------------------
+    document.querySelector('.grid-stedin .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
     document.querySelector('.grid-charger .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
     document.querySelector('.grid-energy .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
-    document.querySelector('.grid-schouten .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
     document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('no-line');
-    document.querySelector('.grid-stedin .grid-line-1').classList.remove('grid-line-flipped');
-
+    document.querySelector('.grid-stedin .grid-line-1:first-of-type').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-stedin .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('guide-line-active');
+    document.querySelector('.grid-energy .grid-line-1:first-of-type').classList.remove('grid-line-flipped');
 
     // ALS ELEMENT EEN STARTLIJN HEEFT
     if (gridStedin.classList.contains('start-line-1')) {
-        // // RESET CLASSES
-        // document.querySelector('.grid-charger .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
-        // document.querySelector('.grid-energy .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
-        // document.querySelector('.grid-schouten .grid-line-1.grid-line-vertical').classList.remove('grid-line-flipped');
-        // document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('no-line');
-
         // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
         if (gridSchouten.classList.contains('end-line-1')) {
             document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('no-line');
@@ -184,29 +199,148 @@ function LineDirection() {
                 document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('guide-line-active');
             }, delay);
         }
-        
         if (gridCharger.classList.contains('end-line-1')) {
             document.querySelector('.grid-charger .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
         } else if (gridBattery.classList.contains('end-line-1')) {
             document.querySelector('.grid-energy .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
         }
+
     } else if (gridSchouten.classList.contains('start-line-1')) {
-        // RESET CLASSES
-
-
         // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
         if (gridStedin.classList.contains('end-line-1')) {
             document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('no-line');
             document.querySelector('.grid-stedin .grid-line-1').classList.add('grid-line-flipped');
             document.querySelector('.grid-stedin .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
-        } else {
-            setTimeout(function() {
-                // document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('guide-line-active');
-            }, delay);
+        } else if (gridCharger.classList.contains('end-line-1')) {
+            document.querySelector('.grid-charger .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-1')) {
+            document.querySelector('.grid-energy .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
         }
 
+    } else if (gridCharger.classList.contains('start-line-1')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-1')) {
+            document.querySelector('.grid-stedin .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('guide-line-active');
+            }, delay);
+        } else if (gridSchouten.classList.contains('end-line-1')) {
+            document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-1')) {
+            document.querySelector('.grid-energy .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridBattery.classList.contains('start-line-1')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-1')) {
+            document.querySelector('.grid-stedin .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('guide-line-active');
+            }, delay);
+            document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+        } else if (gridSchouten.classList.contains('end-line-1')) {
+            document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+        } else if (gridCharger.classList.contains('end-line-1')) {
+            document.querySelector('.grid-charger .grid-line-1.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-1:first-of-type').classList.add('grid-line-flipped');
+        }
 
     }
+
+
+
+    // RESET LINE 2 CLASSES ------------------------------
+    document.querySelector('.grid-stedin .grid-line-2.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-2.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-charger .grid-line-2.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-energy .grid-line-2.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('no-line');
+    document.querySelector('.grid-stedin .grid-line-2:nth-of-type(3)').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-stedin .grid-line-2.grid-line-vertical').classList.remove('grid-line-flipped');
+    document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('guide-line-active');
+    document.querySelector('.grid-energy .grid-line-2:nth-of-type(3)').classList.remove('grid-line-flipped');
+
+    // ALS ELEMENT EEN STARTLIJN HEEFT
+    if (gridStedin.classList.contains('start-line-2')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridSchouten.classList.contains('end-line-2')) {
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('no-line');
+            document.querySelector('.grid-schouten .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        } else {
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('guide-line-active');
+            }, delay);
+        }
+        if (gridCharger.classList.contains('end-line-2')) {
+            document.querySelector('.grid-charger .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-2')) {
+            document.querySelector('.grid-energy .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridSchouten.classList.contains('start-line-2')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-2')) {
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('no-line');
+            document.querySelector('.grid-stedin .grid-line-2').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridCharger.classList.contains('end-line-2')) {
+            document.querySelector('.grid-charger .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-2')) {
+            document.querySelector('.grid-energy .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridCharger.classList.contains('start-line-2')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-2')) {
+            document.querySelector('.grid-stedin .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('guide-line-active');
+            }, delay);
+        } else if (gridSchouten.classList.contains('end-line-2')) {
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        } else if (gridBattery.classList.contains('end-line-2')) {
+            document.querySelector('.grid-energy .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+        }
+
+    } else if (gridBattery.classList.contains('start-line-2')) {
+        // CHECK WELK ELEMENT HET EINDPUNT IS VAN DE LIJN
+        if (gridStedin.classList.contains('end-line-2')) {
+            document.querySelector('.grid-stedin .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-stedin .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            setTimeout(function() {
+                document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('guide-line-active');
+            }, delay);
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+        } else if (gridSchouten.classList.contains('end-line-2')) {
+            document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+            document.querySelector('.grid-schouten .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+        } else if (gridCharger.classList.contains('end-line-2')) {
+            document.querySelector('.grid-charger .grid-line-2.grid-line-vertical').classList.add('grid-line-flipped');
+            document.querySelector('.grid-energy .grid-line-2:nth-of-type(3)').classList.add('grid-line-flipped');
+        }
+        
+    }
+
+    
+
+
+
+
+
+
     
 }
 
@@ -243,15 +377,24 @@ function visualizeScenario() {
 // RESETTEN VAN ACTIEVE SCENARIO ----------------------------------------------------------------------------------------
 function resetScenario() {
     document.querySelectorAll('main .grid-icon').forEach(function(currentEl) {
+        lines = 1;
+
         currentEl.classList.remove('active-start');
         currentEl.classList.remove('active-end');
 
+        currentEl.classList.remove('active-line-1');
+        currentEl.classList.remove('active-line-2');
         currentEl.classList.remove('active');
 
         currentEl.classList.remove('start-line-1');
         currentEl.classList.remove('end-line-1');
+        currentEl.classList.remove('start-line-2');
+        currentEl.classList.remove('end-line-2');
+
         document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('guide-line-active');
         document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('no-line');
+        document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('guide-line-active');
+        document.querySelector('.grid-schouten .grid-line-2:nth-of-type(3)').classList.remove('no-line');
 
         firstLineButton.classList.remove('line-active');
         secondLineButton.classList.remove('line-active');
@@ -260,9 +403,11 @@ function resetScenario() {
 
 // RESETTEN VAN EERSTE LIJN
 function resetFirstLine() {
+    document.querySelector('.start-line-1').classList.remove('active-line-1');
+    document.querySelector('.end-line-1').classList.remove('active-line-1');
     document.querySelector('.start-line-1').classList.remove('active');
-    document.querySelector('.start-line-1').classList.remove('start-line-1');
     document.querySelector('.end-line-1').classList.remove('active');
+    document.querySelector('.start-line-1').classList.remove('start-line-1');
     document.querySelector('.end-line-1').classList.remove('end-line-1'); 
     firstLineButton.classList.remove('line-active');
     

@@ -193,8 +193,12 @@ main .grid-line {
     animation-play-state: paused;
     transform: translateX(calc(0.15rem / -2));
 }
-main > div.active .grid-line {
+main > div.active-line-1 .grid-line-1 {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    animation-play-state: running;
+}
+main > div.active-line-2 .grid-line-2 {
+    background-image: linear-gradient(90deg, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 50%, rgba(255,0,0,1) 50%, rgba(255,0,0,1) 100%);
     animation-play-state: running;
 }
 main .grid-line-vertical {
@@ -205,14 +209,64 @@ main .grid-line-vertical {
 main .grid-line-flipped {
     animation: grid-line-active-backwards 5s linear infinite;
 }
-main > div.active .grid-line.no-line {
+main > div.active-line-1 .grid-line-1.no-line {
     background-image: linear-gradient(90deg, rgba(170, 170, 170, 1) 0%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 100%);
     animation-play-state: paused;
 }
-main .grid-line.guide-line-active {
+main > div.active-line-2 .grid-line-2.no-line {
+    /* background-image: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 50%, rgba(255,0,0,1) 50%, rgba(255,0,0,1) 100%); */
+    background-image: linear-gradient(90deg, rgba(170, 170, 170, 1) 0%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 50%, rgba(170, 170, 170, 1) 100%);
+    animation-play-state: paused;
+}
+main .grid-line-1.guide-line-active {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     animation-play-state: running;
 }
+main .grid-line-2.guide-line-active {
+    background-image: linear-gradient(90deg, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 50%, rgba(255,0,0,1) 50%, rgba(255,0,0,1) 100%);
+    animation-play-state: running;
+}
+/* TIJDELIJK */
+/* main .grid-line-2 {
+    display: none !important;
+}
+main .start-line-2 .grid-line-2 {
+    display: block !important;
+} */
+/* main .grid-line-2 {
+    background-image: none;
+    background-color: red;
+} */
+main .grid-line-2 {
+    transform: translateX(0.75em) translateY(0.75em);
+    z-index: 1;
+}
+main .grid-line-2.grid-line-vertical {
+    transform: rotate(90deg) translateX(calc(-100% + 1.5dvh)) translateY(-0.75em);
+    width: 8dvh !important;
+}
+main .grid-energy .grid-line-2:nth-of-type(3) {
+    transform: translateX(calc(-50% + 0.75em)) translateY(0.75em) !important;
+    width: 88%;
+}
+/* main .grid-line-3 {
+    background-image: none;
+    background-color: blue;
+} */
+main .grid-line-3 {
+    transform: translateX(-0.75em) translateY(-0.75em);
+    z-index: 1;
+}
+main .grid-line-3.grid-line-vertical {
+    transform: rotate(90deg) translateX(calc(-100% - 1.5dvh)) translateY(0.75em);
+    width: 5dvh !important;
+}
+main .grid-energy .grid-line-3:nth-of-type(5) {
+    transform: translateX(calc(-50% - 0.75em)) translateY(-0.75em) !important;
+    width: 88%;
+}
+
+
 @keyframes grid-line-active-forward {
     to {
       background-position: 15rem;
@@ -262,12 +316,19 @@ main .grid-charger .grid-line-vertical {
     background-image: linear-gradient(90deg, rgba(62,43,66,1) 0%, rgba(62,43,66,1) 50%, rgba(62,43,66,1) 50%, rgba(62,43,66,1) 100%);
     animation-play-state: paused;
 } */
-main > .grid-charger.active .grid-line-vertical {
+
+/* TIJDELIJK WEGGEHAALD */
+/* main > .grid-charger.active .grid-line-vertical {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    animation-play-state: running;
+} */
+/* TIJDELIJK WEGGEHAALD ---- */
+main > .grid-charger.guide-line-active .grid-line-1:first-of-type {
     background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     animation-play-state: running;
 }
-main > .grid-charger.guide-line-active .grid-line:first-of-type {
-    background-image: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+main > .grid-charger.guide-line-active .grid-line-2:first-of-type {
+    background-image: linear-gradient(90deg, rgba(255,0,0,0) 0%, rgba(255,0,0,0) 50%, rgba(255,0,0,1) 50%, rgba(255,0,0,1) 100%);
     animation-play-state: running;
 }
 main .grid-energy .grid-line:first-of-type {
@@ -404,8 +465,8 @@ aside button.inactive.line-active {
     display: flex;
 }
 aside div {
-    display: grid;
-    place-items: center flex-start;
+    display: flex;
+    flex-direction: column;
     gap: 0.25em;
     padding-left: 1em;
     padding-right: 0.15em;
