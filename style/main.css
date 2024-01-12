@@ -74,6 +74,10 @@ body > div > div {
     opacity: 0;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+    animation-play-state: paused;
+}
+body > div.battery-animation > div {
+    animation-play-state: running;
 }
 body > div > div:nth-of-type(1) {
     background-image: url('../images/Achtergrond-EOD-1.png');
@@ -91,7 +95,6 @@ body > div > div:nth-of-type(4) {
     background-image: url('../images/Achtergrond-EOD-4.png');
     animation-delay: 0.4s;
 }
-
 @keyframes battery-animation {
     0%, 50%, 100% {
         opacity: 0;

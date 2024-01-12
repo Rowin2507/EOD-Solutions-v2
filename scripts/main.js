@@ -209,7 +209,9 @@ function checkLineStatus() {
 
         // console.log(startLineActive);
     } 
+
 }
+
 
 
 // FUNCTIES OM TE ACHTERHALEN OF ELEMENT EEN STARTLIJN BEVAT ---------------
@@ -451,14 +453,6 @@ function LineDirection() {
         }
         
     }
-
-    
-
-
-
-
-
-
     
 }
 
@@ -531,6 +525,10 @@ function resetScenario() {
         // RESET HULPTEKST
         helpTextTop.textContent = 'Klik voor een startpunt';
         helpTextBottom.textContent = 'Shift-klik voor een eindpunt';
+
+        // BATTERIJ ANIMATIE RESETTEN
+        document.querySelector('body > div').classList.remove('battery-animation');
+        
     });    
 }
 
@@ -547,3 +545,21 @@ function resetFirstLine() {
     document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('guide-line-active');
     document.querySelector('.grid-schouten .grid-line-1:first-of-type').classList.remove('no-line');
 }
+
+
+
+// CONTROLEER OF ACCU IN GEBRUIK IS
+var callback = function(mutationsList, observer) {
+    for(var mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            var targetElement = mutation.target;
+            if (targetElement.classList.contains('active')) {
+                document.querySelector('body > div').classList.add('battery-animation');
+            }
+        }
+    }
+};
+
+var config = { attributes: true };
+var observer = new MutationObserver(callback);
+observer.observe(gridBattery, config);
